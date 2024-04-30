@@ -2,6 +2,7 @@ import Image from "next/image";
 import CategoryList from "./_components/category-list";
 import Header from "./_components/header";
 import Search from "./_components/search";
+import ProductList from "./_components/product-list";
 
 const Home = () => {
   return (
@@ -25,6 +26,8 @@ const Home = () => {
           className="h-auto w-full"
         />
       </div>
+
+      <ProductList />
     </>
   );
 };
