@@ -8,9 +8,17 @@ const ProductList = async () => {
         gt: 0,
       },
     },
+    take: 20,
+    include: {
+      restaurant: {
+        select: {
+          name: true,
+        },
+      },
+    },
   });
   return (
-    <div>
+    <div className="flex gap-4 overflow-scroll">
       {products.map((product) => (
         <ProductItem key={product.id} product={product} />
       ))}
