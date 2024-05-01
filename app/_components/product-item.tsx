@@ -48,7 +48,9 @@ const ProductItem = ({ product }: ProductItemProps) => {
           )}
         </div>
 
-        <span>{product.restaurant.name}</span>
+        <span className="text-xs text-muted-foreground">
+          {product.restaurant.name}
+        </span>
       </div>
     </div>
   );
