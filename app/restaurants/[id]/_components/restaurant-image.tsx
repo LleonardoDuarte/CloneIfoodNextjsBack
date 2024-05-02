@@ -16,7 +16,7 @@ const RestaurantImage = ({ restaurant }: RestaurantImageProps) => {
   const randlePackClick = () => router.back();
 
   return (
-    <div className="relative h-[215px] w-full">
+    <div className="relative h-[350px] w-full">
       <Image
         src={restaurant.imageURL}
         alt={restaurant.name}
