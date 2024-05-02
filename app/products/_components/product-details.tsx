@@ -1,6 +1,7 @@
 "use client";
 
 import DiscountBadge from "@/app/_components/discount-badge";
+import ProductList from "@/app/_components/product-list";
 import { Button } from "@/app/_components/ui/button";
 import { Card } from "@/app/_components/ui/card";
 import {
@@ -23,9 +24,18 @@ interface ProductDetailsProps {
       restaurant: true;
     };
   }>;
+
+  complementaryProducts: Prisma.ProductGetPayload<{
+    include: {
+      restaurant: true;
+    };
+  }>[];
 }
 
-const ProductDetails = ({ product }: ProductDetailsProps) => {
+const ProductDetails = ({
+  product,
+  complementaryProducts,
+}: ProductDetailsProps) => {
   const [quantity, setQuantity] = useState(1);
 
   const handleIncreaseQuantityClick = () =>
@@ -120,9 +130,14 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
           )} */}
         </div>
       </Card>
-      <div className="mb-3 space-y-3">
+      <div className="mt-6 space-y-3">
         <h3 className="font-semibold">Sobre</h3>
         <p className="text-sm text-muted-foreground">{product.description}</p>
+      </div>
+
+      <div className="mt-6 space-y-3">
+        <h3 className="font-semibold">Sucos</h3>
+        <ProductList products={complementaryProducts} />
       </div>
     </div>
   );
