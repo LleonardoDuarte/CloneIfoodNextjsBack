@@ -19,21 +19,23 @@ const ProductPage = async ({ params: { id } }: ProductPageProps) => {
     },
   });
 
+  if (!product) {
+    return notFound();
+  }
   const juices = await db.product.findMany({
     take: 3,
     where: {
       category: {
         name: "Sucos",
       },
+      restaurant: {
+        id: product?.restautantId,
+      },
     },
     include: {
       restaurant: true,
     },
   });
-
-  if (!product) {
-    return notFound();
-  }
 
   return (
     <>
