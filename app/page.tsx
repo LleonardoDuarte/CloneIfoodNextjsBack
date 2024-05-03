@@ -60,7 +60,7 @@ const Home = async () => {
       </div>
       <div className="px-10 pt-6">
         <PromoBanner
-          src="/bannerpromo02.png"
+          src="/promobanner02.png"
           alt="Lanches a partir de 17,90, confira"
         />
       </div>
