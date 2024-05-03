@@ -15,7 +15,7 @@ const RestaurantItem = ({ restaurant }: RestaurantItemProp) => {
       className="min-w-[266px] max-w-[266px]"
       href={`/restaurants/${restaurant.id}`}
     >
-      <div className="w-full space-y-3">
+      <div className="w-full space-y-8">
         <div className="relative h-[136px] w-full">
           <Image
             src={restaurant.imageURL}
