@@ -18,12 +18,9 @@ interface ProductItemProps {
 
 const ProductItem = ({ product }: ProductItemProps) => {
   return (
-    <Link
-      className="  w-[150px] min-w-[150px]"
-      href={`/products/${product.id}`}
-    >
-      <div className=" w-full space-y-2">
-        <div className="relative  h-[150px] w-full">
+    <Link className=" w-[150px] min-w-[150px]" href={`/products/${product.id}`}>
+      <div className=" w-full space-y-9">
+        <div className="relative  aspect-square w-full">
           {/* No caso so uso do fill ele ja preenche tanto h quanto w da div pai sem necessitar colocar w e h  */}
           <Image
             src={product.imageURL}
