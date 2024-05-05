@@ -4,6 +4,16 @@ import Cart from "@/app/_components/cart";
 import DeliverInfo from "@/app/_components/delivery-info";
 import DiscountBadge from "@/app/_components/discount-badge";
 import ProductList from "@/app/_components/product-list";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/app/_components/ui/alert-dialog";
 import { Button } from "@/app/_components/ui/button";
 import {
   Sheet,
@@ -45,12 +55,26 @@ const ProductDetails = ({
   const { addProductToCard, products } = useContext(CartContext);
 
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isConfirmationDialogOpen, setIsConfirmationDialogOpen] =
+    useState(false);
 
-  console.log(products);
+  const addToCart = ({ emptyCard }: { emptyCard: boolean }) => {
+    addProductToCard({ product, quantity, emptyCard });
+    setIsCartOpen(true);
+  };
 
   const handleAddToCartClick = () => {
-    addProductToCard(product, quantity);
-    setIsCartOpen(true);
+    const hasDifferentRestaurantProduct = products.some(
+      (cardProduct) => cardProduct.restautantId !== product.restautantId,
+    );
+
+    if (hasDifferentRestaurantProduct) {
+      return setIsConfirmationDialogOpen(true);
+    }
+
+    addToCart({
+      emptyCard: false,
+    });
   };
 
   const handleIncreaseQuantityClick = () =>
@@ -144,6 +168,29 @@ const ProductDetails = ({
           <Cart />
         </SheetContent>
       </Sheet>
+
+      <AlertDialog
+        open={isConfirmationDialogOpen}
+        onOpenChange={setIsConfirmationDialogOpen}
+      >
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>
+              Notamos que seu carrinho não está vazio!
+            </AlertDialogTitle>
+            <AlertDialogDescription>
+              Caso você adicione produto de outro restaurante diferente do que
+              já está em sua sacola, o mesmo substituirá o anterior
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancelar</AlertDialogCancel>
+            <AlertDialogAction onClick={() => addToCart({ emptyCard: true })}>
+              Adicionar
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </>
   );
 };
