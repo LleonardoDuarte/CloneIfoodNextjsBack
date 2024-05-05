@@ -1,4 +1,5 @@
 "use client";
+
 import { SearchIcon } from "lucide-react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
@@ -31,7 +32,7 @@ const Search = () => {
         onChange={handleChange}
         value={search}
       />
-      <Button size="icon" onClick={handleSearchSubmit} type="submit">
+      <Button size="icon" type="submit">
         <SearchIcon size={18} />
       </Button>
     </form>
