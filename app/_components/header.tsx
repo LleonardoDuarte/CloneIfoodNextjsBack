@@ -1,7 +1,10 @@
+"use client";
+
 import Image from "next/image";
 import { Button } from "./ui/button";
 import { MenuIcon } from "lucide-react";
 import Link from "next/link";
+import { signIn } from "next-auth/react";
 
 const Header = () => {
   return (
@@ -16,6 +19,7 @@ const Header = () => {
           />
         </Link>
       </div>
+      <Button onClick={() => signIn()}>Login</Button>
       <Button
         size="icon"
         variant="outline"
