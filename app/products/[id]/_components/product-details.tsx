@@ -55,6 +55,7 @@ const ProductDetails = ({
   const { addProductToCard, products } = useContext(CartContext);
 
   const [isCartOpen, setIsCartOpen] = useState(false);
+
   const [isConfirmationDialogOpen, setIsConfirmationDialogOpen] =
     useState(false);
 

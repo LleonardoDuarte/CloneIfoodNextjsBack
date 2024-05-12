@@ -10,7 +10,9 @@ export interface CartProduct
     include: {
       restaurant: {
         select: {
+          id: true;
           deliverfee: true;
+          deliverTimeMinutes: true;
         };
       };
     };
@@ -20,9 +22,9 @@ export interface CartProduct
 
 interface ICartContext {
   products: CartProduct[];
-  subTotalPrice: number;
+  subtotalPrice: number;
   totalPrice: number;
-  totalDiscount: number;
+  totalDiscounts: number;
   addProductToCard: ({
     product,
     quantity,
@@ -43,23 +45,25 @@ interface ICartContext {
   decreaseProductQuantity: (productId: string) => void;
   increaseProductQuantity: (productId: string) => void;
   removeProductsFromCart: (productId: string) => void;
+  clearCart: () => void;
 }
 
 export const CartContext = createContext<ICartContext>({
   products: [],
-  subTotalPrice: 0,
+  subtotalPrice: 0,
   totalPrice: 0,
-  totalDiscount: 0,
+  totalDiscounts: 0,
   addProductToCard: () => {},
   decreaseProductQuantity: () => {},
   increaseProductQuantity: () => {},
   removeProductsFromCart: () => {},
+  clearCart: () => {},
 });
 
 export const CartProvider = ({ children }: { children: ReactNode }) => {
   const [products, setProducts] = useState<CartProduct[]>([]);
 
-  const subTotalPrice = useMemo(() => {
+  const subtotalPrice = useMemo(() => {
     return products.reduce((acc, product) => {
       return acc + Number(product.price) * product.quantity;
     }, 0);
@@ -73,8 +77,12 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     );
   }, [products]);
 
-  const totalDiscount =
-    subTotalPrice - totalPrice + Number(products?.[0]?.restaurant?.deliverfee);
+  const totalDiscounts =
+    subtotalPrice - totalPrice + Number(products?.[0]?.restaurant?.deliverfee);
+
+  const clearCart = () => {
+    return setProducts([]);
+  };
 
   const decreaseProductQuantity = (productId: string) => {
     return setProducts((prev) =>
@@ -159,9 +167,10 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     <CartContext.Provider
       value={{
         products,
-        totalDiscount,
-        subTotalPrice,
+        totalDiscounts,
+        subtotalPrice,
         totalPrice,
+        clearCart,
         addProductToCard,
         decreaseProductQuantity,
         increaseProductQuantity,
